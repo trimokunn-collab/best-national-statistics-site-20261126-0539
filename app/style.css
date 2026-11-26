@@ -1,0 +1,325 @@
+/* Statistik Indonesia — gaya situs.
+   Palet asli: hijau tua + merah bendera di atas latar kertas hangat.
+   Judul serif, isi sans sistem. Tanpa font eksternal, tanpa gambar luar. */
+
+:root {
+  --paper: #faf8f1;
+  --card: #ffffff;
+  --ink: #1c1917;
+  --muted: #78716c;
+  --line: #e7e5e4;
+  --green: #166534;
+  --green-dark: #14532d;
+  --green-soft: #dcfce7;
+  --red: #b91c1c;
+  --red-soft: #fee2e2;
+  --amber: #b45309;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.25;
+  margin: 0 0 8px;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.35rem; }
+
+a { color: var(--green); }
+a:hover { color: var(--green-dark); }
+
+/* --- Header & navigasi --- */
+.site-header {
+  background: var(--green-dark);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+.brand-text strong { font-family: Georgia, serif; font-size: 1.15rem; }
+.brand-text small { font-size: 0.78rem; color: #bbf7d0; }
+
+.site-header nav { display: flex; gap: 4px; flex-wrap: wrap; margin-left: auto; }
+.site-header nav a {
+  color: #dcfce7;
+  text-decoration: none;
+  padding: 7px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.site-header nav a:hover { background: rgba(255, 255, 255, 0.12); color: #fff; }
+.site-header nav a.active { background: #fff; color: var(--green-dark); }
+
+/* --- Halaman --- */
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 20px 56px;
+}
+
+.kicker {
+  color: var(--red);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  margin: 0 0 6px;
+}
+
+.intro { font-size: 1.08rem; color: #44403c; max-width: 68ch; }
+
+.hero {
+  border-bottom: 3px solid var(--green);
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+}
+.hero h1 { font-size: 2.4rem; margin-bottom: 6px; }
+
+/* --- Kartu angka --- */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin: 20px 0 28px;
+}
+.stat-grid.one-col { grid-template-columns: 1fr 1fr; }
+
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--green);
+  border-radius: 12px;
+  padding: 16px 16px 12px;
+}
+.stat-card:nth-child(6) { border-top-color: var(--red); }
+.stat-card:nth-child(7) { border-top-color: var(--red); }
+
+.stat-label {
+  margin: 0 0 4px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #44403c;
+}
+.stat-value {
+  margin: 0 0 4px;
+  font-family: Georgia, serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  line-height: 1.1;
+}
+.stat-unit { font-size: 0.95rem; font-weight: 400; color: var(--muted); font-family: system-ui, sans-serif; }
+.stat-note { margin: 0 0 8px; font-size: 0.88rem; color: #57534e; }
+
+.src {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* --- Grafik --- */
+.charts-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.chart-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px 18px 12px;
+  margin-bottom: 16px;
+}
+.charts-2col .chart-card { margin-bottom: 0; }
+
+.chart-desc { margin: 0 0 10px; color: #57534e; font-size: 0.95rem; }
+.chart-card canvas { display: block; width: 100%; }
+
+.donut-wrap {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.donut-wrap canvas { width: 240px; max-width: 100%; flex: none; }
+
+.legend { list-style: none; margin: 0; padding: 0; font-size: 0.92rem; }
+.legend li { margin-bottom: 6px; }
+.swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  margin-right: 8px;
+  vertical-align: -1px;
+}
+
+/* Toggle Garis/Batang */
+.toggle { display: flex; gap: 6px; margin-bottom: 10px; }
+.toggle-btn {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font: 600 0.88rem system-ui, sans-serif;
+  cursor: pointer;
+}
+.toggle-btn:hover { border-color: var(--green); }
+.toggle-btn.active { background: var(--green); border-color: var(--green); color: #fff; }
+
+/* --- Fakta sekilas --- */
+.facts { margin-top: 8px; }
+.fact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px 24px;
+}
+.fact-list li {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+}
+.fact-list strong { font-family: Georgia, serif; font-size: 1.25rem; color: var(--green-dark); }
+.fact-src { color: var(--muted); font-size: 0.8rem; }
+
+/* --- Tabel --- */
+.table-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+th, td { padding: 9px 10px; text-align: left; border-bottom: 1px solid var(--line); }
+th { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--muted); }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody tr:hover { background: #f5f5f4; }
+td.empty { text-align: center; color: var(--muted); padding: 24px 10px; }
+
+/* --- Kontrol provinsi --- */
+.controls {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin-bottom: 8px;
+}
+.control { display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 0.9rem; }
+.control input[type="search"], .control select {
+  font: 1rem system-ui, sans-serif;
+  padding: 9px 12px;
+  border: 1px solid #d6d3d1;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  min-width: 240px;
+}
+.control input[type="search"]:focus, .control select:focus {
+  outline: 2px solid var(--green);
+  outline-offset: 1px;
+  border-color: var(--green);
+}
+.chips { border: 0; padding: 0; margin: 0; }
+.chips legend { font-weight: 600; font-size: 0.9rem; padding: 0; margin-bottom: 6px; }
+.chip {
+  border: 1px solid #d6d3d1;
+  background: #fff;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font: 600 0.9rem system-ui, sans-serif;
+  cursor: pointer;
+  margin-right: 6px;
+  color: var(--ink);
+}
+.chip:hover { border-color: var(--green); }
+.chip.active { background: var(--green); border-color: var(--green); color: #fff; }
+.result-count { color: var(--muted); font-size: 0.9rem; margin: 4px 0 12px; }
+
+/* --- Perdagangan & catatan --- */
+.trade-list { margin: 0 0 10px; display: grid; gap: 10px; }
+.trade-list > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 10px;
+}
+.trade-list dt { font-weight: 700; }
+.trade-list dd { margin: 0; font-family: Georgia, serif; font-size: 1.25rem; font-weight: 700; color: var(--green-dark); }
+
+.note-box {
+  background: var(--green-soft);
+  border: 1px solid #bbf7d0;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 16px;
+}
+.note-box h2 { font-size: 1.15rem; }
+
+/* --- Footer --- */
+.site-footer {
+  background: var(--green-dark);
+  color: #d6d3d1;
+  font-size: 0.9rem;
+}
+.footer-inner { max-width: 1080px; margin: 0 auto; padding: 28px 20px; }
+.site-footer strong { color: #fff; }
+
+/* --- Ponsel --- */
+@media (max-width: 860px) {
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-grid.one-col { grid-template-columns: 1fr; }
+  .charts-2col { grid-template-columns: 1fr; }
+  .fact-list { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .page { padding: 20px 14px 44px; }
+  h1 { font-size: 1.6rem; }
+  .hero h1 { font-size: 1.9rem; }
+  .stat-grid { grid-template-columns: 1fr; }
+  .fact-list { grid-template-columns: 1fr; }
+  .header-inner { gap: 10px; }
+  .site-header nav { margin-left: 0; }
+  .site-header nav a { padding: 6px 9px; font-size: 0.9rem; }
+  .control input[type="search"], .control select { min-width: 0; width: 100%; }
+  .controls { flex-direction: column; align-items: stretch; gap: 12px; }
+  .donut-wrap { justify-content: center; }
+}

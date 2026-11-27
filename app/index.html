@@ -1,47 +1,41 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Statistik Indonesia: penduduk, ekonomi, provinsi, pendidikan, dan kesehatan — angka resmi terbaru dari BPS, Bank Dunia, dan PBB, lengkap dengan sumbernya.">
-<title>Statistik Indonesia — Indonesia dalam angka</title>
-<link rel="stylesheet" href="style.css">
-<script type="module" src="main.js"></script>
+<title>Statistik Indonesia — Angka Resmi Indonesia dalam Satu Tempat</title>
+<meta name="description" content="Situs statistik nasional Indonesia: penduduk, ekonomi, provinsi, dan pembangunan manusia — angka resmi BPS, Bank Dunia, dan UN, lengkap dengan sumber dan tahun.">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <header class="site-header">
-  <div class="header-inner">
-    <a class="brand" href="#/">
-      <svg class="brand-mark" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
-        <rect x="0" y="0" width="32" height="32" rx="7" fill="#166534"/>
-        <rect x="7" y="16" width="4" height="9" rx="1" fill="#fff"/>
-        <rect x="14" y="11" width="4" height="14" rx="1" fill="#fde68a"/>
-        <rect x="21" y="7" width="4" height="18" rx="1" fill="#fff"/>
-      </svg>
-      <span class="brand-text"><strong>Statistik Indonesia</strong><small>Indonesia dalam angka</small></span>
+  <div class="wrap head-in">
+    <a class="brand" href="#/beranda">
+      <span class="brand-mark" aria-hidden="true">SI</span>
+      <span class="brand-text">
+        <strong>Statistik Indonesia</strong>
+        <small>Angka resmi Indonesia, dalam satu tempat.</small>
+      </span>
     </a>
-    <nav aria-label="Navigasi utama">
-      <a href="#/" data-page="beranda">Beranda</a>
-      <a href="#/penduduk" data-page="penduduk">Penduduk</a>
-      <a href="#/ekonomi" data-page="ekonomi">Ekonomi</a>
-      <a href="#/provinsi" data-page="provinsi">Provinsi</a>
-      <a href="#/sosial" data-page="sosial">Sosial</a>
+    <nav class="main-nav" aria-label="Navigasi utama">
+      <a href="#/beranda" data-route="beranda">Beranda</a>
+      <a href="#/penduduk" data-route="penduduk">Penduduk</a>
+      <a href="#/ekonomi" data-route="ekonomi">Ekonomi</a>
+      <a href="#/provinsi" data-route="provinsi">Provinsi</a>
+      <a href="#/sosial" data-route="sosial">Sosial</a>
     </nav>
   </div>
 </header>
-<main id="app" class="page"></main>
+<main id="page" class="wrap" aria-live="polite"></main>
 <footer class="site-footer">
-  <div class="footer-inner">
-    <p><strong>Sumber data.</strong> Angka-angka di situs ini berasal dari
-    publikasi resmi: <strong>BPS (Badan Pusat Statistik)</strong> — Statistik
-    Indonesia, Profil Kemiskinan, Sakernas, dan Sensus Penduduk;
-    <strong> Bank Dunia</strong> (World Development Indicators); dan
-    <strong>PBB</strong> (World Population Prospects). Setiap angka di halaman
-    menulis sumber dan tahunnya. Data terakhir diperbarui November 2026;
-    angka dibulatkan dari publikasi resmi.</p>
-    <p>Situs ini dibuat sebagai karya orisinal untuk kompetisi make.fun
-    "best-national-statistics-site". Bukan situs resmi BPS atau pemerintah.</p>
+  <div class="wrap">
+    <p><strong>Sumber data:</strong> Badan Pusat Statistik (BPS), Bank Dunia,
+    dan Perserikatan Bangsa-Bangsa (UN). Setiap angka di situs ini disertai
+    sumber dan tahunnya.</p>
+    <p>Situs ini bukan publikasi resmi BPS. Angka ditampilkan apa adanya
+    dari sumbernya. Diperbarui November 2026.</p>
   </div>
 </footer>
+<script type="module" src="js/app.js"></script>
 </body>
 </html>

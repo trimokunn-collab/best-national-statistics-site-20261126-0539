@@ -1,71 +1,40 @@
-// serve.ts — server statis kecil untuk app/ (Node 22, pustaka standar saja),
-// supaya situs bisa dijalankan lokal tanpa build step:
-//
-//   node serve.ts               -> http://localhost:8080
-//   node serve.ts --port 8091   -> http://localhost:8091
-//
-// Server ini hanya keperluan pengembangan: menyajikan berkas di bawah app/
-// dengan MIME yang benar dan menolak path yang keluar dari app/.
-
-import { createReadStream, statSync } from 'node:fs';
+// serve.ts — server statis lokal untuk menguji app/ di browser.
+// Jalankan: node serve.ts  (lalu buka http://localhost:8080)
+// Hanya untuk pengujian lokal; bukan bagian dari situs.
 import { createServer } from 'node:http';
-import { extname, join, normalize, resolve, sep } from 'node:path';
+import { readFile } from 'node:fs/promises';
+import { join, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const root = resolve(fileURLToPath(new URL('./app', import.meta.url)));
-const args = process.argv.slice(2);
-const portIndex = args.indexOf('--port');
-const requested = portIndex === -1 ? 8080 : Number(args[portIndex + 1]);
-const port =
-  Number.isInteger(requested) && requested > 0 && requested < 65536
-    ? requested
-    : 8080;
-
-const MIME = {
+const root = fileURLToPath(new URL('./app', import.meta.url));
+const port = Number(process.env.PORT ?? 8080);
+const types = {
   '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
   '.mjs': 'text/javascript; charset=utf-8',
-  '.css': 'text/css; charset=utf-8',
-  '.json': 'application/json; charset=utf-8',
-  '.svg': 'image/svg+xml',
+  '.json': 'application/json',
   '.png': 'image/png',
   '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.webp': 'image/webp',
-  '.ico': 'image/x-icon',
-  '.woff2': 'font/woff2',
+  '.svg': 'image/svg+xml',
 };
 
-createServer((request, response) => {
-  const url = new URL(request.url ?? '/', 'http://localhost');
-  let pathname;
+createServer(async (req, res) => {
+  const path = decodeURIComponent(new URL(req.url ?? '/', 'http://x').pathname);
+  const file = join(root, path === '/' ? 'index.html' : path);
+  if (!file.startsWith(root)) {
+    res.writeHead(403);
+    res.end('forbidden');
+    return;
+  }
   try {
-    pathname = decodeURIComponent(url.pathname);
+    const body = await readFile(file);
+    res.writeHead(200, { 'content-type': types[extname(file)] ?? 'application/octet-stream' });
+    res.end(body);
   } catch {
-    response.writeHead(400).end('bad request');
-    return;
+    res.writeHead(404);
+    res.end('not found');
   }
-  if (pathname.endsWith('/')) pathname += 'index.html';
-  const file = resolve(join(root, normalize(pathname)));
-  if (file !== root && !file.startsWith(root + sep)) {
-    response.writeHead(403).end('forbidden');
-    return;
-  }
-  let size;
-  try {
-    const stats = statSync(file);
-    if (!stats.isFile()) throw new Error('not a file');
-    size = stats.size;
-  } catch {
-    response.writeHead(404).end('not found');
-    return;
-  }
-  response.writeHead(200, {
-    'content-type': MIME[extname(file).toLowerCase()] ?? 'application/octet-stream',
-    'content-length': size,
-    'cache-control': 'no-store',
-  });
-  createReadStream(file).pipe(response);
-}).listen(port, '127.0.0.1', () => {
-  console.log(`app/ is on http://localhost:${port}`);
+}).listen(port, () => {
+  console.log(`Statistik Indonesia v2 di http://localhost:${port}`);
 });

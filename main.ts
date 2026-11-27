@@ -1,16 +1,15 @@
-// main.ts — program penyerahan entri "Statistik Indonesia" (Node 22,
+// main.ts — program penyerahan entri "Statistik Indonesia" v2 (Node 22,
 // pustaka standar saja).
 //
-// Situsnya adalah file statis di app/ (index.html + ES module + CSS, tanpa
+// Situsnya adalah file statis di app/ (index.html + modul ES + CSS, tanpa
 // build step) dan tangkapan layarnya di screenshots/. Program ini menyalin
-// keduanya ke /output lalu menulis /output/dossier.json — ringkasan yang
+// keduanya ke direktori output lalu menulis dossier.json — ringkasan yang
 // dibaca juri (tangkapan layar, berkas + byte first load, dan sumber situs)
 // — dengan pustaka make.fun yang divendor di vendor/makefun-frontend.ts.
 // Pustaka itu salinan byte-identical dari kit; jangan diubah.
 //
 // Di luar container grader, MAKEFUN_OUTPUT_DIR menggantikan /output:
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
-// Lalu sajikan lokal dengan `node serve.ts` dan buka http://localhost:8080.
 
 import { cpSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -24,15 +23,12 @@ mkdirSync(out, { recursive: true });
 cpSync(join(here, 'app'), join(out, 'app'), { recursive: true });
 mkdirSync(join(out, 'screenshots'), { recursive: true });
 if (existsSync(join(here, 'screenshots'))) {
-  cpSync(join(here, 'screenshots'), join(out, 'screenshots'), {
-    recursive: true,
-  });
+  cpSync(join(here, 'screenshots'), join(out, 'screenshots'), { recursive: true });
 }
 
-// Batas yang sama dengan yang dipakai scorer di gerbang: teks dossier
-// maksimal 160 KiB, maksimal 4 screenshot @ 256 KiB, app/ maksimal 993
-// berkas+direktori dan 16 MiB. Melewati batas ini membuat program gagal di
-// titik yang sama dengan scorer.
+// Batas scorer: paling banyak 4 screenshot, masing-masing paling banyak
+// 256 KiB; app/ paling banyak 993 berkas dan 16 MiB; teks dossier
+// paling banyak 163.840 byte.
 writeFileSync(
   join(out, 'dossier.json'),
   buildDossier(out, {
